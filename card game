@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int score(vector<string>& cards, char x) {
+        int points=0;
+        int firstF=0,secondF=0,firstMax=0,secondMax=0,xx=0;
+        vector<int>ff(26,0),sf(26,0);
+        for(auto it:cards){
+            if(it[0]==x and it[1]==0){
+                xx++;
+            }else if(it[0]==x){
+                firstF++;
+                ff[it[0]-'0']++;
+                firstMax=max(firstMax,ff[it[0]-'0']);
+            }else{
+                secondF++;
+                sf[it[1]-'0']++;
+                secondMax=max(secondMax,sf[it[1]-'0']);
+            }
+        }
+        if(firstMax>=(firstF-firstMax)){
+            int p=firstF-firstMax;
+            if(xx>=p){
+                points+=p;
+                xx-=p;
+                firstF-=firstMax;
+            }
+        }else if(xx>=firstMax){
+            points+=firstMax;
+            xx-=firstMax;
+            firstMax-=firstMax;
+        }
+
+        if(secondMax>=(secondF-secondMax)){
+            int p=secondF-secondMax;
+            if(xx>=p){
+                points+=p;
+                xx-=p;
+                secondF-=secondMax;
+            }
+        }else if(xx>=secondMax){
+            points+=secondMax;
+            xx-=secondMax;
+            secondF-=secondMax;
+        }
+    }
+};
